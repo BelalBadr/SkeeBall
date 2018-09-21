@@ -6,9 +6,14 @@ using UnityEngine.UI;
 
 public class GameHelper : MonoBehaviour {
 
-    private Vector3 throwSpeed = new Vector3(0, 0, 1150);// We can change this depends on our game requirement 
+
+    public Camera CameraObj; // Hold camera obj to get distance 
+    public float ThrowSpeedZ;   // We can change this depends on our game requirement 
+    public float ThrowSpeedY;   // We can change this depends on our game requirement 
+
+
     public GameObject BallReference;  // Ball prefabe
-    private Vector3 ballPos = new Vector3(0, 0.38f, -11.41f);
+    private Vector3 ballPos = new Vector3(0, 0.6f, -7.58f);
     public bool BallOnStage = false;// Helper value to detetct that the player can shoot again
     public int Score;//value to store the player score
     public Text ScoreText; //score text UI
@@ -18,10 +23,8 @@ public class GameHelper : MonoBehaviour {
     public Image PauseBG;// Pause bg to use in first countdown
 
     public Text TimerText;// Timer start at 30
-    private int timerValue;//Timer variable 
-
-    public Transform CameraObj; // Hold camera obj to get distance 
-
+    public int timerValue;//Timer variable 
+    
     private GameObject currentBallObj;// Current Ball to get distance so the player can shoot again
 
     //Bar helper variables
@@ -59,7 +62,6 @@ public class GameHelper : MonoBehaviour {
         GameOverBut.SetActive(false);
 
         HidePowerBar();
-        timerValue = 30;
         TimerText.text = "Timer :" + timerValue;
 
 
@@ -126,7 +128,6 @@ public class GameHelper : MonoBehaviour {
 
         if (Leaderboard.HighestScore(Score))
         {
-            Debug.Log("HISET");
             ResultGameOver.text = "Amazing! You got the highest score!";
             GameOverBut.transform.GetChild(0).GetComponent<Text>().text = "Go back";
             GameOverBut.GetComponent<Button>().onClick.AddListener(() => LoadMain());
@@ -181,21 +182,14 @@ public class GameHelper : MonoBehaviour {
     {
         if (!BallOnStage)
         {
-            ballPos.x = Random.Range(-0.35f, 0.22f);
-            Debug.Log(ballPos);
+            Vector3 realWorldPos = CameraObj.ScreenToWorldPoint(new Vector3(pos.x, pos.y, 2.5f));
+            float forceZ = ThrowSpeedZ + (fillAmount * 3);
+            float forceY = ThrowSpeedY + (fillAmount * 3);
 
-            Vector3 realWorldPos = Camera.main.ScreenToWorldPoint(pos);
-            ballPos.x = realWorldPos.x;
+            GameObject ball = Instantiate(BallReference, ballPos, Quaternion.identity) as GameObject;
 
-
-            Debug.Log(ballPos);
-
-            GameObject ball = Instantiate(BallReference, ballPos, transform.rotation) as GameObject;
-
-            float force = (fillAmount * 50);
-            throwSpeed.z += force;
-
-            ball.GetComponent<Rigidbody>().AddForce(throwSpeed);
+            Vector3 dir = (realWorldPos - ballPos).normalized * 3 + new Vector3(0, forceY, forceZ);
+            ball.GetComponent<Rigidbody>().velocity = dir;
 
             currentBallObj = ball;
             BallOnStage = true;
@@ -203,19 +197,22 @@ public class GameHelper : MonoBehaviour {
             HidePowerBar();
         }
     }
+   
+
+
     private void CheckBallDistance()
     {
-        if (currentBallObj == null)//only to make sure that the ball obj is not null
+        if (currentBallObj == null)//To make sure that the ball obj is not null
             return;
 
 
-        Vector3 heading = new Vector3(currentBallObj.transform.position.x - CameraObj.position.x,
-                                      currentBallObj.transform.position.y - CameraObj.position.y,
-                                      currentBallObj.transform.position.z - CameraObj.position.z);
+        Vector3 heading = new Vector3(currentBallObj.transform.position.x - CameraObj.transform.position.x,
+                                      currentBallObj.transform.position.y - CameraObj.transform.position.y,
+                                      currentBallObj.transform.position.z - CameraObj.transform.position.z);
 
 
         //this gives us the distance inward from the plane of the "screen", and it is also a bit more efficient in a frame update.
-        float distance = Vector3.Dot(heading, CameraObj.forward);
+        float distance = Vector3.Dot(heading, CameraObj.transform.forward);
 
 
         if (distance > 3.5f)  // We can change these value depends on what we need 
@@ -235,6 +232,14 @@ public class GameHelper : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
+            }
+        }
+
         if (gameStatus == GameStatus.Play)
         {
             UpdateBar();
@@ -244,6 +249,8 @@ public class GameHelper : MonoBehaviour {
                 if (Input.GetMouseButtonDown(0))
                 {
                     PrebareShoot(Input.mousePosition);
+
+
                 }
                 if (Input.GetMouseButtonUp(0))
                 {
@@ -283,8 +290,6 @@ public class GameHelper : MonoBehaviour {
 
             case BarAnimation.ToRight:
                 fillAmount += (PowerBarSpeed * Time.fixedDeltaTime) - (fillAmount * (PowerBarSpeed / 55));
-                //.01
-//                Debug.Log(fillAmount);
                 break;
         }
 
@@ -300,3 +305,4 @@ public class GameHelper : MonoBehaviour {
         PowerBar.GetComponent<Image>().fillAmount = fillAmount;
     }
 }
+ 

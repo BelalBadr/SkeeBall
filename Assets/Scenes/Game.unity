@@ -267,7 +267,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0
+  m_FillAmount: 0.232
   m_FillClockwise: 1
   m_FillOrigin: 0
 --- !u!222 &88368771
@@ -1136,7 +1136,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.7197526, y: 0.9418922}
   m_AnchorMax: {x: 0.96370625, y: 1}
-  m_AnchoredPosition: {x: 5.6609993, y: -2.3498}
+  m_AnchoredPosition: {x: 5.66098, y: -2.3498535}
   m_SizeDelta: {x: -12.300003, y: -4.699997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &386195353
@@ -1415,6 +1415,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41af6082a70834fb8b25af6798bed36b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CameraObj: {fileID: 345000516}
+  ThrowSpeedZ: 3
+  ThrowSpeedY: 3
   BallReference: {fileID: 100000, guid: 8b1f6ca28e4094762b90d6cf95669a00, type: 2}
   BallOnStage: 0
   Score: 0
@@ -1422,7 +1425,7 @@ MonoBehaviour:
   CountDownText: {fileID: 639796766}
   PauseBG: {fileID: 227119336}
   TimerText: {fileID: 386195354}
-  CameraObj: {fileID: 345000517}
+  timerValue: 30
   PowerBarSpeed: 0.5
   PowerBar: {fileID: 88368770}
   PowerBarBg: {fileID: 435261938}
@@ -3021,7 +3024,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1187543510
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3477,7 +3480,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.9418922}
   m_AnchorMax: {x: 0.42800003, y: 1}
-  m_AnchoredPosition: {x: 1.5, y: 0.19999695}
+  m_AnchoredPosition: {x: 1.5, y: 0.19995117}
   m_SizeDelta: {x: 3, y: -0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1324443723

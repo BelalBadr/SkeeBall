@@ -1,6 +1,9 @@
 # SkeeBall
 This is Unity Game Assignment for Animoca Brands
 
+* Please note that I used the free 3d skee model from this link:
+https://3dwarehouse.sketchup.com/model/783eb7baeb75269ab56265edc340dccf/Skee-ball-arcade-game
+
 Hey,
 Please find the entire requirement done.
 As for the nice to have section, Please find below what things are done:
@@ -14,6 +17,7 @@ values for the game for the developer. These values could be:
 ○ Amount of points given for each hole. (you can change hole value at BallHole GameObject) 
 ○ The duration of the timer of each game. (you can change timer value at GameHelper GameObject)
 ○ Speed (or time to complete) of the Power bar. (you can change power bar speed value at GameHelper GameObject)
+
 
 
 Thanks,

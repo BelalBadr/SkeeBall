@@ -4,6 +4,8 @@ This is Unity Game Assignment for Animoca Brands
 * Please note that I used the free 3d skee model from this link:
 https://3dwarehouse.sketchup.com/model/783eb7baeb75269ab56265edc340dccf/Skee-ball-arcade-game
 
+* I used Unity 2018.2.5f1 (Mac)
+
 Hey,
 Please find the entire requirement done.
 As for the nice to have section, Please find below what things are done:
